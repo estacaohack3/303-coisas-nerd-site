@@ -18,3 +18,46 @@ function buscarDados(tipo){
         }
     });
 }
+
+function mostrarFormulario(){
+    container.innerHTML = `
+        <form>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Nome">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Série">
+            </div>
+            <div class="form-group">
+                <select class="form-control">
+                    <option>anime</option>
+                    <option>cartoon</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" placeholder="Imagem">
+            </div>
+            <button class="btn btn-primary" onclick="enviarFormulario()">Enviar</button>
+        </form>
+    `;
+}
+
+function enviarFormulario(){
+    let inputs = document.querySelectorAll('input');
+    let select = document.querySelector('select');
+    
+    let dados = {
+        nome: inputs[0].value,
+        serie: inputs[1].value,
+        imagem: inputs[2].value
+    };
+
+    let url = 'http://localhost:3000/' + select.value;
+
+    axios.post(url, dados).then(function(resposta){
+        console.log(resposta);
+
+        container.innerHTML = `<div class="alert alert-success">Personagem inserido!</div>`;
+    });
+    
+}
